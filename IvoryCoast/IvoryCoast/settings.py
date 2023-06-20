@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'djoser',
     'django_extensions',
     'store',
+    'lessons',
 ]
 
 MIDDLEWARE = [
