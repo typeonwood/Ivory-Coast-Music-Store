@@ -2,7 +2,6 @@ from rest_framework.test import APITestCase, APIClient
 from .models import Month, Venue, Event, TrialBooking
 from datetime import date, time
 from rest_framework.reverse import reverse
-from rest_framework.test import force_authenticate
 from .serializers import EventSerializer
 from rest_framework import status
 from django.contrib.auth.models import User
