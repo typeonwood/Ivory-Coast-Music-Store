@@ -3,7 +3,7 @@ from rest_framework.routers import SimpleRouter
 from .views import EventViewSet, TrialBookingView
 
 router = SimpleRouter()
-router.register(r'event', EventViewSet, basename='event')
+router.register(r'events', EventViewSet, basename='events')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -7,9 +7,9 @@ from .serializers import StoreSerializer
 class StoreViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin):
     queryset = StoreItem.objects.all()
     serializer_class = StoreSerializer
-    search_fields = ['name']
+    search_fields = ['title']
     ordering_fields = ['price', 'featured']
-    filterset_fields = ['price']
+    filterset_fields = {'price': ['lte', 'gte']}
 
 class FeaturedView(ListAPIView):
     queryset = StoreItem.objects.filter(featured=True)

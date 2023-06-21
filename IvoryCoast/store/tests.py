@@ -8,7 +8,7 @@ from rest_framework import status
 class StoreModelTest(APITestCase):
 
     def setUp(self):
-        self.new_item = StoreItem.objects.create(title='beluga', price=1000, description='woah this is cool', inventory=12)
+        self.new_item = StoreItem.objects.create(title='beluga', price=1000, description='adorable', inventory=12)
 
     def test_create_item(self):
         self.item = StoreItem.objects.get(title='beluga')
@@ -18,7 +18,7 @@ class StoreModelTest(APITestCase):
 class StoreViewTest(APITestCase):
      
     def setUp(self):
-        self.item = StoreItem.objects.create(title='beluga', price=1000, description='woah this is cool', inventory=12)
+        self.item = StoreItem.objects.create(title='beluga', price=1000.00, description='adorable', inventory=12)
 
     def test_get_item_list(self):
         response = self.client.get(reverse('store-list'))

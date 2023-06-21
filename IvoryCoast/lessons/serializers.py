@@ -8,6 +8,7 @@ class VenueSerializer(ModelSerializer):
         fields = ['name', 'address', 'phone']
 
 class EventSerializer(ModelSerializer):
+    venue = VenueSerializer()
     class Meta:
         model = Event
         validators = [

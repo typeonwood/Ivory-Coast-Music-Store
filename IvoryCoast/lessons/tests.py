@@ -1,5 +1,5 @@
 from rest_framework.test import APITestCase, APIClient
-from .models import Month, Venue, Event, TrialBooking
+from .models import Venue, Event, TrialBooking
 from datetime import date, time
 from rest_framework.reverse import reverse
 from .serializers import EventSerializer
@@ -12,14 +12,12 @@ class EventModelTest(APITestCase):
     
     def setUp(self):
         venue = Venue.objects.create(name='some place', address='non of ur beeswax', phone=9671872345)
-        month = Month.objects.create(name='Brazil')
         self.event = Event.objects.create(
             name='joe', 
             date=date(2023, 4, 23), 
             time=time(5), 
             venue=venue, 
-            description='aa pplace', 
-            month=month
+            description='aa pplace'
         )
 
     def test_create_event(self):
@@ -47,32 +45,30 @@ class TestEventView(APITestCase):
 
     def setUp(self):
         venue = Venue.objects.create(name='some place', address='non of ur beeswax', phone=9671872345)
-        month = Month.objects.create(name='Brazil')
         self.event = Event.objects.create(
             name='joe', 
             date=date(2023, 4, 23), 
             time=time(5), 
             venue=venue, 
-            description='aa pplace', 
-            month=month
+            description='aa pplace'
         )
 
     def test_get_item_list(self):
-        response = self.client.get(reverse('event-list'))
+        response = self.client.get(reverse('events-list'))
         item_list = Event.objects.all()
         serialized_list = EventSerializer(item_list, many=True)
         self.assertEqual(response.data, serialized_list.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_valid_single_item(self):
-        response = self.client.get(reverse('event-detail', kwargs={'pk': self.event.pk}))
+        response = self.client.get(reverse('events-detail', kwargs={'pk': self.event.pk}))
         store_item = Event.objects.get(pk=self.event.pk)
         serialized_item = EventSerializer(store_item, many=False)
         self.assertEqual(response.data, serialized_item.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_invalid_single_item(self):
-        response = self.client.get(reverse('event-detail', kwargs={'pk': 0}))
+        response = self.client.get(reverse('events-detail', kwargs={'pk': 0}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
@@ -134,4 +130,4 @@ class TestAnonymousTrialView(APITestCase):
             data = json.dumps(self.payload),
             content_type = 'application/json'
         )
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
