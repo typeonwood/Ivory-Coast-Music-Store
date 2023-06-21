@@ -23,4 +23,6 @@ class TrialBooking(models.Model):
     instrument = models.CharField(max_length=255)
     date = models.DateField()
     time = models.TimeField()
+    def __str__(self) -> str:
+        return str(self.date) + ' - ' + self.student
 
