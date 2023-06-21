@@ -10,6 +10,9 @@ from .serializers import EventSerializer, TrialSerializer
 class EventViewSet(GenericViewSet, ListModelMixin, RetrieveModelMixin):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    search_fields = ['name', 'venue']
+    ordering_fields = ['date']
+    filterset_fields = ['venue', 'date']
 
 class TrialBookingView(APIView):
     permission_classes = [IsAuthenticated]

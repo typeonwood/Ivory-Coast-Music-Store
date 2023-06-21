@@ -38,3 +38,12 @@ class StoreViewTest(APITestCase):
         response = self.client.get(reverse('store-detail', kwargs={'pk': 300}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+
+class TestFeaturedView(APITestCase):
+
+    def test_get_featured_list(self):
+        response = self.client.get(reverse('featured'))
+        item_list = StoreItem.objects.filter(featured=True)
+        serialized_list = StoreSerializer(item_list, many=True)
+        self.assertEqual(response.data, serialized_list.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
